@@ -16,6 +16,18 @@ export const Navigation = () => {
           >
             Home
           </NavLink>
+          <NavLink
+            className="text-white text-2xl hover:bg-emerald-700 px-4 py-4 "
+            to="/my-posts"
+          >
+            My Posts
+          </NavLink>
+          <NavLink
+            className="text-white text-2xl hover:bg-emerald-700 px-4 py-4 "
+            to="/my-profile"
+          >
+            My Profile
+          </NavLink>
         </ul>
       </div>
     </nav>

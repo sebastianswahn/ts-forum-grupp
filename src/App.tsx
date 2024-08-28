@@ -3,6 +3,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
 
 import Home from "./pages/Home";
+import MyPosts from "./pages/MyPosts";
+import MyProfile from "./pages/MyProfile";
 
 import "tailwindcss/tailwind.css";
 import React from "react";
@@ -16,6 +18,14 @@ function App() {
         {
           index: true,
           element: <Home />,
+        },
+        {
+          path: "/my-posts",
+          element: <MyPosts />,
+        },
+        {
+          path: "/my-profile",
+          element: <MyProfile />,
         },
       ],
     },
