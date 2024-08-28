@@ -8,6 +8,7 @@ import MyProfile from "./pages/MyProfile";
 
 import "tailwindcss/tailwind.css";
 import React from "react";
+import CreateThread from "./pages/CreateThread";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,6 +27,10 @@ function App() {
         {
           path: "/my-profile",
           element: <MyProfile />,
+        },
+        {
+          path: "/create-thread",
+          element: <CreateThread />,
         },
       ],
     },

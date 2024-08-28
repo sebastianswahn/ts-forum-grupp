@@ -28,6 +28,12 @@ export const Navigation = () => {
           >
             My Profile
           </NavLink>
+          <NavLink
+            className="text-white text-2xl hover:bg-emerald-700 px-4 py-4 "
+            to="/create-thread"
+          >
+            Create Thread
+          </NavLink>
         </ul>
       </div>
     </nav>
