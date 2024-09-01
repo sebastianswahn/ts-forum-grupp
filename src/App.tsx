@@ -5,6 +5,7 @@ import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import MyPosts from "./pages/MyPosts";
 import MyProfile from "./pages/MyProfile";
+import ThreadList from "./components/ThreadList";
 
 import "tailwindcss/tailwind.css";
 import React from "react";
@@ -35,6 +36,7 @@ function App() {
       ],
     },
   ]);
+  
 
   return <RouterProvider router={router} />;
 }
