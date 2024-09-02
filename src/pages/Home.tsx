@@ -1,13 +1,15 @@
 // src/pages/Home.tsx
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ThreadList from "../components/ThreadList";
 import { Thread } from "../components/models/Thread";
-import { DataTable } from "@/components/DataTable";
-import { columns } from "@/threads/columns";
-import NavTrigger from "@/components/NavTrigger";
+import { DataTable } from "../components/DataTable";
+import { columns } from "../threads/columns";
+import NavTrigger from "../components/NavTrigger";
 
 const Home: React.FC = () => {
   const [threads, setThreads] = useState<Thread[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedThreads = localStorage.getItem("threads");
@@ -21,6 +23,11 @@ const Home: React.FC = () => {
     setThreads(updatedThreads);
     localStorage.setItem("threads", JSON.stringify(updatedThreads));
   };
+
+  const handleItemClick = (id: string) => {
+    navigate(`/thread/${id}`); // Use template literals to construct the path
+  };
+
   console.log(threads);
 
   return (
