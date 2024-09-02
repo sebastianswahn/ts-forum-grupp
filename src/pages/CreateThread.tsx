@@ -5,6 +5,7 @@ import { Thread } from "../components/models/Thread";
 function CreateThread() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [author, setAuthor] = useState("anonymous");
   const [confirmationMessage, setConfirmationMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -16,7 +17,7 @@ function CreateThread() {
       id: Date.now().toString(), 
       title,
       content,
-      author: "Användare", 
+      author, 
       createdAt: new Date(),
     };
 
@@ -61,6 +62,19 @@ function CreateThread() {
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            required
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+            Author
+          </label>
+          <input
+            type="text"
+            id="title"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
             required
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
           />
