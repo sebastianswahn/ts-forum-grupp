@@ -1,13 +1,5 @@
 "use client";
-import React from "react";
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardFooter,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card"
+import React, { useEffect, useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { Button } from "../components/ui/button";
@@ -17,12 +9,105 @@ import {
   CardFooter,
   CardHeader,
 } from "../components/ui/card";
-import { HeartIcon, MessageCircleIcon, RepeatIcon } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { Thread } from "@/components/models/Thread";
+
+// Function to generate a random username
+const generateRandomName = () => {
+  const adjectives = [
+    "Brave",
+    "Clever",
+    "Witty",
+    "Fierce",
+    "Calm",
+    "Gentle",
+    "Quick",
+    "Quiet",
+    "Bold",
+    "Eager",
+  ];
+  const nouns = [
+    "Lion",
+    "Tiger",
+    "Falcon",
+    "Panther",
+    "Wolf",
+    "Eagle",
+    "Hawk",
+    "Bear",
+    "Fox",
+    "Owl",
+  ];
+  const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const noun = nouns[Math.floor(Math.random() * nouns.length)];
+  return `${adjective}${noun}`;
+};
+
+// Function to generate a random avatar URL
+const generateRandomAvatar = () => {
+  const randomNumber = Math.floor(Math.random() * 1000); // Generates a number to create unique URLs
+  return `https://api.dicebear.com/6.x/identicon/svg?seed=${randomNumber}`;
+};
 
 function ThreadInfo() {
+  const { id } = useParams<{ id: string }>();
+  const [thread, setThread] = useState<Thread | null>(null);
+  const [comments, setComments] = useState<
+    { text: string; user: { name: string; avatar: string } }[]
+  >([]); // State to hold comments with user info
+  const [newComment, setNewComment] = useState(""); // State for the new comment input
+
+  // Load thread and comments from localStorage when the component mounts
+  useEffect(() => {
+    const storedThreads = localStorage.getItem("threads");
+    if (storedThreads) {
+      const threadsArray = JSON.parse(storedThreads);
+      const foundThread = threadsArray.find(
+        (thread: Thread) => thread.id === id
+      );
+      setThread(foundThread || null);
+    }
+
+    // Load comments for the specific thread from localStorage
+    const storedComments = localStorage.getItem(`comments-${id}`);
+    if (storedComments) {
+      setComments(JSON.parse(storedComments));
+    }
+  }, [id]);
+
+  // Function to save comments to localStorage
+  const saveCommentsToLocalStorage = (
+    comments: { text: string; user: { name: string; avatar: string } }[]
+  ) => {
+    localStorage.setItem(`comments-${id}`, JSON.stringify(comments));
+  };
+
+  // Function to handle comment submission
+  const handleCommentSubmit = () => {
+    if (newComment.trim()) {
+      // Generate a random user with a random name and avatar
+      const randomUser = {
+        name: generateRandomName(),
+        avatar: generateRandomAvatar(),
+      };
+      // Add the new comment with the random user to the comments state
+      const updatedComments = [
+        ...comments,
+        { text: newComment, user: randomUser },
+      ];
+      setComments(updatedComments);
+      saveCommentsToLocalStorage(updatedComments); // Save updated comments to localStorage
+      setNewComment(""); // Clear the input field
+    }
+  };
+
+  if (!thread) {
+    return <div>Thread not found</div>;
+  }
+
   return (
-    <div>
-      <Card className="w-full max-w-md">
+    <div className="flex items-center justify-center min-h-screen bg-background">
+      <Card className="w-full max-w-sm p-4"> {/* Adjusted size and added padding */}
         <CardHeader className="flex flex-row items-center gap-4">
           <Avatar>
             <AvatarImage
@@ -32,8 +117,8 @@ function ThreadInfo() {
             <AvatarFallback>UN</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <p className="text-sm font-semibold">John Doe</p>
-            <p className="text-xs text-muted-foreground">@johndoe</p>
+            <p className="text-sm font-semibold">{thread.author}</p>
+            <p className="text-xs text-muted-foreground">@{thread.id}</p>
           </div>
         </CardHeader>
         <CardContent>
@@ -42,22 +127,54 @@ function ThreadInfo() {
             multiple lines if needed. #ThreadContent #Example
           </p>
         </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button variant="ghost" size="sm" className="text-muted-foreground">
-            <HeartIcon className="mr-1 h-4 w-4" />
-            <span className="text-xs">42</span>
-            <span className="sr-only">Likes</span>
-          </Button>
-          <Button variant="ghost" size="sm" className="text-muted-foreground">
-            <MessageCircleIcon className="mr-1 h-4 w-4" />
-            <span className="text-xs">24</span>
-            <span className="sr-only">Comments</span>
-          </Button>
-          <Button variant="ghost" size="sm" className="text-muted-foreground">
-            <RepeatIcon className="mr-1 h-4 w-4" />
-            <span className="text-xs">12</span>
-            <span className="sr-only">Reposts</span>
-          </Button>
+        <CardFooter className="flex flex-col gap-4">
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Add a comment..."
+              className="border rounded p-2 flex-grow"
+            />
+            <button
+              type="button"
+              onClick={handleCommentSubmit}
+              className="ml-2 bg-blue-500 text-white p-2 rounded"
+            >
+              Submit
+            </button>
+          </div>
+
+          {/* Heading for comments section */}
+          {comments.length > 0 && (
+            <h2 className="text-lg font-semibold mt-4">Comments</h2>
+          )}
+
+          {/* Render the comments below the input */}
+          {comments.length > 0 && (
+            <div className="mt-2">
+              {comments.map((comment, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-2 bg-gray-100 p-2 rounded mt-2 text-sm"
+                >
+                  <Avatar>
+                    <AvatarImage
+                      src={comment.user.avatar}
+                      alt={`@${comment.user.name}`}
+                    />
+                    <AvatarFallback>
+                      {comment.user.name.slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col">
+                    <p className="font-semibold">{comment.user.name}</p>
+                    <p>{comment.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </CardFooter>
       </Card>
     </div>
