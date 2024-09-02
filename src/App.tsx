@@ -10,6 +10,7 @@ import ThreadList from "./components/ThreadList";
 import "tailwindcss/tailwind.css";
 import React from "react";
 import CreateThread from "./pages/CreateThread";
+import ThreadInfo from "./components/ThreadInfo";
 
 function App() {
   const router = createBrowserRouter([
@@ -33,10 +34,13 @@ function App() {
           path: "/create-thread",
           element: <CreateThread />,
         },
+        {
+          path: "/thread/:id",
+          element: <ThreadInfo />,
+        },
       ],
     },
   ]);
-  
 
   return <RouterProvider router={router} />;
 }
