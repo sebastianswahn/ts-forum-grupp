@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 export const Navigation = () => {
   return (
     <nav
-      className="bg-emerald-600 py-4 pt-20 h-screen fixed z-50 opacity-0 scale-95 hover:opacity-100 hover:scale-100 duration-500 ease-in-out transition-opacity"
+      className="bg-emerald-600 py-4 pt-20 h-screen fixed opacity-0 scale-95 hover:opacity-100 hover:scale-100 duration-500 ease-in-out transition-opacity"
       style={{ position: "fixed", zIndex: 1000 }}
     >
       {" "}

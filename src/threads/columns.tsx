@@ -1,0 +1,30 @@
+"use client";
+
+import { ColumnDef } from "@tanstack/react-table";
+import { Thread } from "../components/models/Thread";
+
+// This type is used to define the shape of our data.
+// You can use a Zod schema here if you want.
+
+export const columns: ColumnDef<Thread>[] = [
+  {
+    accessorKey: "title",
+    header: () => "Title",
+    cell: ({ row }) => <div>{row.getValue("title")}</div>,
+  },
+  {
+    accessorKey: "content",
+    header: () => "Content",
+    cell: ({ row }) => <div>{row.getValue("content")}</div>,
+  },
+  {
+    accessorKey: "author",
+    header: () => "Author",
+    cell: ({ row }) => <div>{row.getValue("author")}</div>,
+  },
+  {
+    accessorKey: "createdAt",
+    header: () => "Created At",
+    cell: ({ row }) => <div>{row.getValue("createdAt")}</div>,
+  },
+];

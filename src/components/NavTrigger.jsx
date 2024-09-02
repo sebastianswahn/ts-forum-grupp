@@ -2,10 +2,10 @@ import React from "react";
 
 function NavTrigger() {
   return (
-    <div>
+    <div className="z-40">
       {" "}
       <div
-        className="absolute z-auto w-12 h-12 text-white rounded-md bg-emerald-500 align-middle text-center"
+        className="absolute w-12 h-12 text-white rounded-md bg-emerald-500 align-middle text-center"
         style={{ top: "4%", left: "5%", transform: "translate(-50%, -50%)" }}
       >
         <div>

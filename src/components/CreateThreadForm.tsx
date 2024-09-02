@@ -1,14 +1,13 @@
-
-import React, { useState } from 'react';
-import { Thread } from './models/Thread';
+import React, { useState } from "react";
+import { Thread } from "./models/Thread";
 
 interface CreateThreadFormProps {
   onCreate: (thread: Thread) => void;
 }
 
 const CreateThreadForm: React.FC<CreateThreadFormProps> = ({ onCreate }) => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,16 +15,28 @@ const CreateThreadForm: React.FC<CreateThreadFormProps> = ({ onCreate }) => {
       id: Date.now().toString(),
       title,
       content,
-      author: 'Anonymous', 
+      author: "Anonymous",
+      // Kan vi göra så att användaren kan skriva in sitt namn här?
       createdAt: new Date(),
     };
     onCreate(newThread);
-    setTitle('');
-    setContent('');
+    setTitle("");
+    setContent("");
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {/*       <div>
+        // Typ så här?
+        <label>Author</label>
+        <input
+          type="text"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          required></input>
+      
+
+          </div> */}
       <div>
         <label>Title</label>
         <input
