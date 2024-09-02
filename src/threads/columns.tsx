@@ -27,4 +27,9 @@ export const columns: ColumnDef<Thread>[] = [
     header: () => "Created At",
     cell: ({ row }) => <div>{row.getValue("createdAt")}</div>,
   },
+  {
+    accessorKey: "answered",
+    header: () => "Answered",
+    cell: ({ row }) => <div>{row.getValue("answered")}</div>,
+  },
 ];

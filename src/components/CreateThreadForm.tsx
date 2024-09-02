@@ -8,6 +8,7 @@ interface CreateThreadFormProps {
 const CreateThreadForm: React.FC<CreateThreadFormProps> = ({ onCreate }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [author, setAuthor] = useState("anonymous");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,7 +16,7 @@ const CreateThreadForm: React.FC<CreateThreadFormProps> = ({ onCreate }) => {
       id: Date.now().toString(),
       title,
       content,
-      author: "Anonymous",
+      author:"",
       // Kan vi göra så att användaren kan skriva in sitt namn här?
       createdAt: new Date(),
     };
@@ -43,6 +44,15 @@ const CreateThreadForm: React.FC<CreateThreadFormProps> = ({ onCreate }) => {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </div>
+      {/* User/ author name */}
+      <div>
+        <label>author</label>
+        <textarea
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
           required
         />
       </div>

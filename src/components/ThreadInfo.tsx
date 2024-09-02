@@ -80,6 +80,21 @@ function ThreadInfo() {
     comments: { text: string; user: { name: string; avatar: string } }[]
   ) => {
     localStorage.setItem(`comments-${id}`, JSON.stringify(comments));
+    // here what wer ard doin g we  are geting all the threads from local storeage
+    // then we are updating the thread with the id of the thread we are currently on
+    // then we are setting the thread to the updated thread
+    // then we are saving the updated thread to local storage
+    
+    let storedThreads=JSON.parse(localStorage.getItem("threads"))||[];
+    
+
+    let modifiedThreads=storedThreads.map((thread:Thread)=>{
+      if(thread.id===id){
+        thread.answered="YES";
+      }
+      return thread;
+    })
+    localStorage.setItem("threads",JSON.stringify(modifiedThreads));    
   };
 
   // Function to handle comment submission
@@ -104,6 +119,7 @@ function ThreadInfo() {
   if (!thread) {
     return <div>Thread not found</div>;
   }
+  console.log(thread,"my thread of current page")
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
@@ -123,8 +139,7 @@ function ThreadInfo() {
         </CardHeader>
         <CardContent>
           <p className="text-sm">
-            This is the content of the thread. It can be a longer text, spanning
-            multiple lines if needed. #ThreadContent #Example
+            {thread.content}
           </p>
         </CardContent>
         <CardFooter className="flex flex-col gap-4">

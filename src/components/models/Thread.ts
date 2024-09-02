@@ -5,6 +5,7 @@ export interface Thread {
   author: string;
   createdAt: Date;
   comments?: Comment[];
+  answered?: string;
 }
 export type Comment = {
   id: string;
