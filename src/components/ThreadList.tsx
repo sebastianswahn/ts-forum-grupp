@@ -1,6 +1,6 @@
 // src/components/ThreadList.tsx
-import React from 'react';
-import { Thread } from '../components/models/Thread';
+import React from "react";
+import { Thread } from "./models/types";
 
 interface ThreadListProps {
   threads: Thread[];
@@ -12,12 +12,16 @@ const ThreadList: React.FC<ThreadListProps> = ({ threads, onDelete }) => {
     <div>
       <ul>
         {threads.map((thread) => (
-          <li key={thread.id} className="border-b py-2 flex justify-between items-center">
+          <li
+            key={thread.id}
+            className="border-b py-2 flex justify-between items-center"
+          >
             <div>
               <h3 className="text-lg font-bold">{thread.title}</h3>
               <p>{thread.content}</p>
               <small className="text-gray-500">
-                By {thread.author} on {new Date(thread.createdAt).toLocaleDateString()}
+                By {thread.author} on{" "}
+                {new Date(thread.createdAt).toLocaleDateString()}
               </small>
             </div>
             <button

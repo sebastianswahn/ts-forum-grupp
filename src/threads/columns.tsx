@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Thread } from "../components/models/Thread";
+import { Thread } from "../components/models/types";
 
 export const columns: ColumnDef<Thread>[] = [
   {

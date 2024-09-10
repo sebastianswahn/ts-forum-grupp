@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ThreadList from "../components/ThreadList";
-import { Thread } from "../components/models/Thread";
+import { Thread } from "../components/models/types";
 import { DataTable } from "../components/DataTable";
 import { columns } from "../threads/columns";
 import NavTrigger from "../components/NavTrigger";
@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
-  const onColumnClick = (column: any) => {
+  const onColumnClick = () => {
     navigate(`/thread/${id}`);
   };
 
@@ -37,9 +37,7 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <NavTrigger />{" "}
-      {/*       <ThreadList threads={threads} onDelete={handleDelete} />
-       */}{" "}
+      <NavTrigger />
       <div className="max-w-3xl ml-12">
         <DataTable
           columns={columns}

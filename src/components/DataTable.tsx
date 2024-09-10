@@ -14,8 +14,10 @@ import {
   TableHeader,
   TableRow,
 } from "../components/ui/table";
-import { Thread } from "./models/Thread";
+import { Thread } from "./models/types";
 import { Link, useNavigate, useParams } from "react-router-dom";
+
+const navigate = useNavigate();
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -32,8 +34,6 @@ export function DataTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
-  const navigate = useNavigate();
 
   return (
     <div

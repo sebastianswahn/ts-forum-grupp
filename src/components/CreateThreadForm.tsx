@@ -1,24 +1,22 @@
 import React, { useState } from "react";
-import { Thread } from "./models/Thread";
-
-interface CreateThreadFormProps {
-  onCreate: (thread: Thread) => void;
-}
+import { Thread, CreateThreadFormProps, ThreadCategory } from "./models/types";
+import { Timestamp } from "mongodb";
 
 const CreateThreadForm: React.FC<CreateThreadFormProps> = ({ onCreate }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [author, setAuthor] = useState("anonymous");
+  const [author, setAuthor] = useState("");
+  const [category, setCategory] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newThread: Thread = {
-      id: Date.now().toString(),
+      id: Math.random().toString(36),
       title,
       content,
-      author:"",
-      // Kan vi göra så att användaren kan skriva in sitt namn här?
-      createdAt: new Date(),
+      category: "Thread",
+      author: "",
+      createdAt: Timestamp,
     };
     onCreate(newThread);
     setTitle("");
@@ -55,6 +53,25 @@ const CreateThreadForm: React.FC<CreateThreadFormProps> = ({ onCreate }) => {
           onChange={(e) => setAuthor(e.target.value)}
           required
         />
+      </div>
+      <div>
+        <label>Content</label>
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Category</label>
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value as ThreadCategory)}
+          required
+        >
+          <option value="Thread">Thread</option>
+          <option value="QNA">QNA</option>
+        </select>
       </div>
       <div>
         <label>Content</label>

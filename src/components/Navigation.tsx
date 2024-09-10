@@ -1,6 +1,12 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react";
 
+import { NavLink } from "react-router-dom";
 export const Navigation = () => {
   return (
     <nav
@@ -34,6 +40,14 @@ export const Navigation = () => {
           >
             Create Thread
           </NavLink>
+          <header>
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </header>
         </ul>
       </div>
     </nav>

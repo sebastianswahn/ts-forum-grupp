@@ -1,47 +1,42 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Thread } from "../components/models/Thread";
+import { Thread } from "../components/models/types";
 
 function CreateThread() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("anonymous");
-  const [confirmationMessage, setConfirmationMessage] = useState<string | null>(null);
+  const [confirmationMessage, setConfirmationMessage] = useState<string | null>(
+    null
+  );
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-   
     const newThread: Thread = {
-      id: Date.now().toString(), 
+      id: Date.now().toString(),
       title,
       content,
-      author, 
+      author,
       createdAt: new Date(),
     };
 
-    
     const storedThreads = localStorage.getItem("threads");
     const threads = storedThreads ? JSON.parse(storedThreads) : [];
 
-    
     const updatedThreads = [newThread, ...threads];
 
-   
     localStorage.setItem("threads", JSON.stringify(updatedThreads));
 
-    
     setConfirmationMessage("Your thread has been successfully created!");
 
-   
     setTitle("");
     setContent("");
 
-    
     setTimeout(() => {
       navigate("/");
-    }, 2000); 
+    }, 2000);
   };
 
   return (
@@ -54,7 +49,10 @@ function CreateThread() {
       )}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700"
+          >
             Title
           </label>
           <input
@@ -67,7 +65,10 @@ function CreateThread() {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700"
+          >
             Author
           </label>
           <input
@@ -80,7 +81,10 @@ function CreateThread() {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="content"
+            className="block text-sm font-medium text-gray-700"
+          >
             Content
           </label>
           <textarea

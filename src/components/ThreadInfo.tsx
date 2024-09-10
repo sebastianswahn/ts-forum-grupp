@@ -10,7 +10,7 @@ import {
   CardHeader,
 } from "../components/ui/card";
 import { useParams } from "react-router-dom";
-import { Thread } from "@/components/models/Thread";
+import { Thread } from "../components/models/types";
 
 // Function to generate a random username
 const generateRandomName = () => {
@@ -84,17 +84,16 @@ function ThreadInfo() {
     // then we are updating the thread with the id of the thread we are currently on
     // then we are setting the thread to the updated thread
     // then we are saving the updated thread to local storage
-    
-    let storedThreads=JSON.parse(localStorage.getItem("threads"))||[];
-    
 
-    let modifiedThreads=storedThreads.map((thread:Thread)=>{
-      if(thread.id===id){
-        thread.answered="YES";
+    let storedThreads = JSON.parse(localStorage.getItem("threads")) || [];
+
+    let modifiedThreads = storedThreads.map((thread: Thread) => {
+      if (thread.id === id) {
+        answered = "YES";
       }
       return thread;
-    })
-    localStorage.setItem("threads",JSON.stringify(modifiedThreads));    
+    });
+    localStorage.setItem("threads", JSON.stringify(modifiedThreads));
   };
 
   // Function to handle comment submission
@@ -119,11 +118,13 @@ function ThreadInfo() {
   if (!thread) {
     return <div>Thread not found</div>;
   }
-  console.log(thread,"my thread of current page")
+  console.log(thread, "my thread of current page");
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
-      <Card className="w-full max-w-sm p-4"> {/* Adjusted size and added padding */}
+      <Card className="w-full max-w-sm p-4">
+        {" "}
+        {/* Adjusted size and added padding */}
         <CardHeader className="flex flex-row items-center gap-4">
           <Avatar>
             <AvatarImage
@@ -138,9 +139,7 @@ function ThreadInfo() {
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-sm">
-            {thread.content}
-          </p>
+          <p className="text-sm">{thread.content}</p>
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
